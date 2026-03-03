@@ -35,9 +35,11 @@ std::optional<Config> Config::fromArgs(int argc, char ** argv)
 
 void from_json(const nlohmann::json & j, Config::Sender & c)
 {
-  UNFINISHED(__PRETTY_FUNCTION__);
-
+  // DOPLNĚNO: Načítání všech parametrů pro Sender z config.json
   j.at("localPort").get_to(c.localPort);
+  j.at("remotePort").get_to(c.remotePort);
+  j.at("remoteAddress").get_to(c.remoteAddress);
+  j.at("sendingPeriodMillis").get_to(c.sendingPeriodMillis);
 }
 
 void from_json(const nlohmann::json & j, Config::Receiver & c)
@@ -53,18 +55,24 @@ void from_json(const nlohmann::json & j, Config & c)
 
 void Message::to_json(nlohmann::json & j, const Message & m)
 {
-  UNFINISHED(__PRETTY_FUNCTION__);
-
+  // DOPLNĚNO: Serializace všech polí zprávy
   j = nlohmann::json{
     {"timestamp", m.timestamp},
+    {"frame", m.frame},
+    {"x", m.x},
+    {"y", m.y},
+    {"z", m.z}
   };
 }
 
 void Message::from_json(const nlohmann::json & j, Message & m)
 {
-  UNFINISHED(__PRETTY_FUNCTION__);
-
+  // DOPLNĚNO: Deserializace všech polí zprávy
   j.at("timestamp").get_to(m.timestamp);
+  j.at("frame").get_to(m.frame);
+  j.at("x").get_to(m.x);
+  j.at("y").get_to(m.y);
+  j.at("z").get_to(m.z);
 }
 
 bool Message::serialize(Socket::IPFrame & f, const Message & m)
@@ -72,6 +80,8 @@ bool Message::serialize(Socket::IPFrame & f, const Message & m)
   nlohmann::json dataJson;
   to_json(dataJson, m);
   std::string dataStr = to_string(dataJson);
+  
+  // Kontrola, zda se JSON vejde do bufferu socketu
   if (dataStr.size() > f.serializedData.size()) return false;
 
   memset(f.serializedData.data(), 0, f.serializedData.size());
@@ -83,6 +93,7 @@ bool Message::serialize(Socket::IPFrame & f, const Message & m)
 
 bool Message::deserialize(const Socket::IPFrame & f, Message & m)
 {
+  // Parsování JSONu z bufferu socketu
   const nlohmann::json dataJson = nlohmann::json::parse(f.serializedData, nullptr, false);
   if (dataJson.is_discarded()) return false;
 

@@ -1,15 +1,12 @@
 [Unit]
-Description = Example sender
-Wants = network-online.target
-After = local-fs.target network-online.target
+Description=Example Sender Service
 
 [Service]
-User =
-WorkingDirectory =
-ExecStart =
-Restart = on-failure
-RestartSec = 5
-TimeoutStopSec = 5
+# Doplňujeme podle zadání:
+User=student
+WorkingDirectory=/home/student/mpc-rbt-student-247414
+ExecStart=/home/student/mpc-rbt-student-247414/run_sender.sh
+Restart=always
 
 [Install]
-WantedBy = multi-user.target
+WantedBy=multi-user.target

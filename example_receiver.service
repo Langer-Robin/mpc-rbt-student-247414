@@ -1,15 +1,14 @@
 [Unit]
-Description = Example receiver
-Wants = network-online.target
-After = local-fs.target network-online.target
+Description=Example Receiver Service
 
 [Service]
-User =
-WorkingDirectory =
-ExecStart =
-Restart = on-failure
-RestartSec = 5
-TimeoutStopSec = 5
+# Tvůj uživatel
+User=student
+# Absolutní cesta do složky projektu
+WorkingDirectory=/home/student/mpc-rbt-student-247414
+# Cesta ke spouštěcímu skriptu
+ExecStart=/home/student/mpc-rbt-student-247414/run_receiver.sh
+Restart=always
 
 [Install]
-WantedBy = multi-user.target
+WantedBy=multi-user.target

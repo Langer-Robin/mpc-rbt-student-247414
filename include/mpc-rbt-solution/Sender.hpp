@@ -18,7 +18,17 @@ public:
     config(senderConfig),
     timer_period(config.sendingPeriodMillis)
   {
-    UNIMPLEMENTED(__PRETTY_FUNCTION__);
+    
+    //*********************TOTO JSEM PRIDAL****************************** */
+
+    create();
+    //connect(config.remoteAddress, config.remotePort); // Toto musí být aktivní
+    callback = [this] { onDataTimerTick(); };
+
+    //**************************AZ SEM************************* */
+
+    //UNIMPLEMENTED(__PRETTY_FUNCTION__);  // TOTO JSEM ZAKOMETOVAL
+
   }
 
   void run();

@@ -6,5 +6,9 @@ windows:
   - monitoring:
       layout: even-vertical
       panes:
-        - echo "Watch the receiver status here !"
-        - echo "Watch the sender status here !"
+        # Sledujeme stav služeb (každou vteřinu aktualizováno)
+        - watch -n 1 "systemctl status example_receiver.service"
+        - watch -n 1 "systemctl status example_sender.service"
+        # Sledujeme živý výpis logů (data, která si posílají)
+        - journalctl -u example_receiver.service -f
+        - journalctl -u example_sender.service -f

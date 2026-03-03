@@ -12,7 +12,17 @@ public:
   explicit Node(const Utils::Config::Receiver & receiverConfig)
   : Socket::UDP(receiverConfig.localPort), config(receiverConfig)
   {
-    UNIMPLEMENTED(__PRETTY_FUNCTION__);
+     //*********************TOTO JSEM PRIDAL****************************** */
+
+    create();      // Vytvoří socket
+    
+    bind();
+
+    callback = [this](const Socket::IPFrame & frame) { onDataReceived(frame); };
+    
+    //**************************AZ SEM************************* */
+
+    //UNIMPLEMENTED(__PRETTY_FUNCTION__);  // TOTO JSEM ZAKOMETOVAL
   }
 
   void run();

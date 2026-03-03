@@ -18,7 +18,8 @@ void Receiver::Node::run()
 
 void Receiver::Node::onDataReceived(const Socket::IPFrame & frame)
 {
-  UNIMPLEMENTED(__PRETTY_FUNCTION__);
-
-  RCLCPP_INFO(logger, "\n\tstamp: %ld", data.timestamp);
+// deserialize v Utils.cpp používá vnitřně frame.serializedData
+  if (Utils::Message::deserialize(frame, data)) {
+      RCLCPP_INFO(logger, "RECEIVER: Přijato x: %f, y: %f, z: %f", data.x, data.y, data.z);
+  }
 }
