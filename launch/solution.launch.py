@@ -43,5 +43,13 @@ def generate_launch_description():
             name='rviz2',
             arguments=['-d', rviz_config_path],
             output='screen'
+        ),
+
+        # --- UZEL 3: A* ---
+        Node(
+            package='mpc_rbt_student',
+            executable='planning_node',
+            name='planning_node',
+            output='screen'
         )
     ])
