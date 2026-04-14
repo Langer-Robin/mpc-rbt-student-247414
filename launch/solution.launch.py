@@ -51,5 +51,13 @@ def generate_launch_description():
             executable='planning_node',
             name='planning_node',
             output='screen'
-        )
+        ),
+
+        # --- UZEL 4: motion control ---
+        Node(
+            package='mpc_rbt_student',
+            executable='motion_control_node',
+            name='motion_control_node',
+            output='screen'
+        ),
     ])

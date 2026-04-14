@@ -1,5 +1,5 @@
 #include "Planning.hpp"
-#include "nav_msgs/msg/path.hpp" /
+#include "nav_msgs/msg/path.hpp"
 
 using namespace std::chrono_literals; 
 
@@ -108,7 +108,7 @@ void PlanningNode::dilateMap() {
 
     // Vytvoreni si kopie mapy pro nafukovani (aby jsme si neupravovali original)
     nav_msgs::msg::OccupancyGrid dilatedMap = map_;
-    int radius = 4; // Nafouknuti o 4 bunky (cca 20cm)
+    int radius = 7; // Nafouknuti o 4 bunky (cca 20cm)
     int width = map_.info.width;
     int height = map_.info.height;
 

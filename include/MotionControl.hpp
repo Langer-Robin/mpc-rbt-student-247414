@@ -59,8 +59,10 @@ class MotionControlNode : public rclcpp::Node {
         geometry_msgs::msg::PoseStamped current_pose_;
         geometry_msgs::msg::PoseStamped goal_pose_;
         sensor_msgs::msg::LaserScan laser_scan_;
+        
+        // --- PŘIDÁNO ---
+        bool collision_detected_; // Příznak pro detekci kolize
+        // ---------------
     };
-
-
 
 #endif // MOTIONCTRL_HPP
