@@ -14,6 +14,25 @@ def generate_launch_description():
     pkg_simulator = get_package_share_directory('mpc_rbt_simulator')
     urdf_file = os.path.join(pkg_simulator, 'resources', 'tiago_model_ros.urdf')
 
+    warehouse_manager = Node(
+        package='mpc_rbt_student',
+        executable='warehouse_manager',
+        name='warehouse_manager',
+        output='screen',
+        parameters=[{'use_sim_time': True}]
+    )
+
+    bt_server = Node(
+        package='mpc_rbt_student',
+        executable='bt_server',
+        name='bt_server',
+        output='screen',
+        parameters=[
+            {'use_sim_time': True},
+            os.path.join(pkg_student, 'config', 'bt_server.yaml')
+        ]
+    )   
+
     # Načtení obsahu URDF souboru do proměnné
     with open(urdf_file, 'r') as infp:
         robot_desc = infp.read()
@@ -60,4 +79,6 @@ def generate_launch_description():
             name='motion_control_node',
             output='screen'
         ),
+        warehouse_manager,
+        bt_server
     ])

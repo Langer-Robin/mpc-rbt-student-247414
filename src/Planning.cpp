@@ -108,7 +108,7 @@ void PlanningNode::dilateMap() {
 
     // Vytvoreni si kopie mapy pro nafukovani (aby jsme si neupravovali original)
     nav_msgs::msg::OccupancyGrid dilatedMap = map_;
-    int radius = 7; // Nafouknuti o 4 bunky (cca 20cm)
+    int radius = 9; // Nafouknuti o 4 bunky (cca 20cm)
     int width = map_.info.width;
     int height = map_.info.height;
 
@@ -122,9 +122,9 @@ void PlanningNode::dilateMap() {
                         int nx = x + dx;
                         int ny = y + dy;
                         if (nx >= 0 && nx < width && ny >= 0 && ny < height) {  //  Kontrola jestli neni dany bod mimo mapu (na kraji)
-                            if (dx*dx + dy*dy <= radius*radius) {
-                                dilatedMap.data[ny * width + nx] = 100; // Zvetseni prekazky na nasi nafouknute mape
-                            }
+                            dilatedMap.data[ny * width + nx] = 100; // Zvetseni prekazky na nasi nafouknute mape
+                            /*if (dx*dx + dy*dy <= radius*radius) {
+                            }*/
                         }
                     }
                 }
@@ -289,7 +289,7 @@ void PlanningNode::smoothPath() {
 
     // Inicializace pomocnych promennych (kopirovani cesty)
     std::vector<geometry_msgs::msg::PoseStamped> newPath = path_.poses;
-    float weight_data = 0.1;
+    float weight_data = 0.7;
     float weight_smooth = 0.2; // velikost narovnavani trasy
     float tolerance = 0.0001;
     float change = tolerance;
